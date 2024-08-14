@@ -1,4 +1,4 @@
-package org.dio;
+package org.dio.domain;
 
 public interface IConta {
 
@@ -6,7 +6,7 @@ public interface IConta {
 
     void depositar(double valor);
 
-    void transferir(double valor, IConta contaDestino);
+    void realizarEmprestimo(double valor);
 
     void imprimirExtrato();
 }

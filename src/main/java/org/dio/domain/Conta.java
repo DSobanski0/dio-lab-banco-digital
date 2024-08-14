@@ -1,4 +1,4 @@
-package org.dio;
+package org.dio.domain;
 
 import lombok.Getter;
 
@@ -11,11 +11,13 @@ public abstract class Conta implements IConta {
     protected int agencia;
     protected int numero;
     protected double saldo;
+    protected Banco banco;
     protected Cliente cliente;
 
-    public Conta(Cliente cliente) {
+    public Conta(Banco banco, Cliente cliente) {
         this.agencia = Conta.AGENCIA_PADRAO;
         this.numero = SEQUENCIAL++;
+        this.banco = banco;
         this.cliente = cliente;
     }
 
@@ -29,13 +31,22 @@ public abstract class Conta implements IConta {
         saldo += valor;
     }
 
-    @Override
-    public void transferir(double valor, IConta contaDestino) {
-        this.sacar(valor);
-        contaDestino.depositar(valor);
+    public void realizarEmprestimo(double valor) {
+        if (validarEmprestimo(valor)) {
+            this.saldo += valor;
+            System.out.printf("Empréstimo de $%.2f realizado!%n", valor);
+            return;
+        }
+        System.out.printf("Empréstimo não realizado! Valor de $%.2f acima do permitido%n", valor);
+    }
+
+    private boolean validarEmprestimo(double valor) {
+        // Empréstimo permitido somente se saldo for maior que 75% do valor solicitado
+        return saldo > valor * 0.75;
     }
 
     protected void imprimirInfosComuns() {
+        System.out.printf("Banco: %s%n", this.getBanco().getNome());
         System.out.printf("Titular: %s%n", this.cliente.getNome());
         System.out.printf("Agencia: %d%n", this.agencia);
         System.out.printf("Numero: %d%n", this.numero);

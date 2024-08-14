@@ -1,9 +1,9 @@
-package org.dio;
+package org.dio.domain;
 
 public class ContaCorrente extends Conta {
 
-    public ContaCorrente(Cliente cliente) {
-        super(cliente);
+    public ContaCorrente(Banco banco, Cliente cliente) {
+        super(banco, cliente);
     }
 
     @Override

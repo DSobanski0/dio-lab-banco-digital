@@ -1,4 +1,4 @@
-package org.dio;
+package org.dio.domain;
 
 import lombok.Getter;
 import lombok.Setter;
